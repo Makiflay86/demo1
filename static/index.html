@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotel Lumière — Gestión</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">✦</span>
+      <div>
+        <h1>Hotel Lumière</h1>
+        <p>Sistema de Gestión</p>
+      </div>
+    </div>
+    <div class="header-time" id="clock"></div>
+  </div>
+</header>
+
+<!-- ═══ STATS ════════════════════════════════════════════════════════════════ -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card" data-color="gold">
+        <div class="stat-icon">🏨</div>
+        <div class="stat-info">
+          <span class="stat-value" id="stat-total">—</span>
+          <span class="stat-label">Total Habitaciones</span>
+        </div>
+      </div>
+      <div class="stat-card" data-color="green">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+          <span class="stat-value" id="stat-disponible">—</span>
+          <span class="stat-label">Disponibles</span>
+        </div>
+      </div>
+      <div class="stat-card" data-color="red">
+        <div class="stat-icon">🛎️</div>
+        <div class="stat-info">
+          <span class="stat-value" id="stat-ocupada">—</span>
+          <span class="stat-label">Ocupadas</span>
+        </div>
+      </div>
+      <div class="stat-card" data-color="amber">
+        <div class="stat-icon">🔧</div>
+        <div class="stat-info">
+          <span class="stat-value" id="stat-mantenimiento">—</span>
+          <span class="stat-label">Mantenimiento</span>
+        </div>
+      </div>
+      <div class="stat-card" data-color="blue">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <span class="stat-value" id="stat-ingresos">—</span>
+          <span class="stat-label">Ingresos Estimados</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTROLS ══════════════════════════════════════════════════════════════ -->
+<section class="controls-section">
+  <div class="container controls-bar">
+    <div class="filter-group">
+      <span class="filter-label">Filtrar:</span>
+      <button class="filter-btn active" data-status="">Todas</button>
+      <button class="filter-btn" data-status="disponible">Disponibles</button>
+      <button class="filter-btn" data-status="ocupada">Ocupadas</button>
+      <button class="filter-btn" data-status="mantenimiento">Mantenimiento</button>
+    </div>
+    <button class="btn-primary" id="btn-add-room">+ Nueva Habitación</button>
+  </div>
+</section>
+
+<!-- ═══ ROOMS GRID ════════════════════════════════════════════════════════════ -->
+<main class="container">
+  <div class="rooms-grid" id="rooms-grid">
+    <!-- cards injected by JS -->
+  </div>
+  <div class="empty-state hidden" id="empty-state">
+    <span>🏨</span>
+    <p>No hay habitaciones con este filtro.</p>
+  </div>
+</main>
+
+<!-- ═══ MODAL: CREATE ROOM ════════════════════════════════════════════════════ -->
+<div class="modal-overlay hidden" id="modal-create">
+  <div class="modal">
+    <button class="modal-close" id="close-create">&times;</button>
+    <h2 class="modal-title">Nueva Habitación</h2>
+    <form id="form-create">
+      <div class="form-group">
+        <label>Número de habitación</label>
+        <input type="text" id="f-number" placeholder="Ej: 305" required />
+      </div>
+      <div class="form-group">
+        <label>Tipo</label>
+        <select id="f-type" required>
+          <option value="individual">Individual</option>
+          <option value="doble">Doble</option>
+          <option value="suite">Suite</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Precio por noche (€)</label>
+        <input type="number" id="f-price" placeholder="150" min="1" step="0.01" required />
+      </div>
+      <div class="form-group">
+        <label>Estado inicial</label>
+        <select id="f-status">
+          <option value="disponible">Disponible</option>
+          <option value="ocupada">Ocupada</option>
+          <option value="mantenimiento">Mantenimiento</option>
+        </select>
+      </div>
+      <div class="form-error hidden" id="create-error"></div>
+      <button type="submit" class="btn-primary w-full">Crear Habitación</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ MODAL: CONFIRM DELETE ═════════════════════════════════════════════════ -->
+<div class="modal-overlay hidden" id="modal-delete">
+  <div class="modal modal-sm">
+    <h2 class="modal-title">Confirmar eliminación</h2>
+    <p class="modal-text">¿Estás seguro de que deseas eliminar la habitación <strong id="delete-room-num"></strong>? Esta acción no se puede deshacer.</p>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="cancel-delete">Cancelar</button>
+      <button class="btn-danger" id="confirm-delete">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ══════════════════════════════════════════════════════════════════ -->
+<div class="toast hidden" id="toast"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
